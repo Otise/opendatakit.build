@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <title>Open Data Kit Form Builder</title>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui-1.7.2.custom.css"/>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Open Data Kit Form Builder</h1>
+
+      <ul class="toolbar">
+        <li><a id="newLink" href="#new" title="Start a new form">New</a></li>
+        <li><a id="openLink" href="#open" title="Open an existing form">Open</a></li>
+        <li class="separator"></li>
+        <li><a id="helpLink" href="#help" title="Get help on using this tool">Help</a></li>
+      </ul>
+    </div>
+    <div class="subheader clearfix">
+      <h2>Untitled Form</h2>
+      <a id="editTitleLink" href="#edit_title" title="Rename this form">Rename</a>
+
+      <ul class="toolbar">
+        <li><a id="undoLink" href="#undo" title="Undo your last action">Undo</a></li>
+        <li><a id="redoLink" href="#redo" title="Redo the last undo">Redo</a></li>
+        <li class="separator"></li>
+        <li><a id="saveLink" href="#save" title="Save the changes to this form">Save</a></li>
+        <li><a id="exportLink" href="#exportDialog" rel="modal" title="Export this form to XForms XML">Export</a></li>
+      </ul>
+    </div>
+    <div class="mainWrapper">
+      <div class="toolPalette">
+        <h3>Tools</h3>
+        <ul>
+          <li><a class="toolButton inputText" rel="inputText">Text</a></li>
+          <li><a class="toolButton inputNumeric" rel="inputNumeric">Numeric</a></li>
+          <li><a class="toolButton inputDate" rel="inputDate">Date</a></li>
+          <li><a class="toolButton inputLocation" rel="inputLocation">Location</a></li>
+          <li><a class="toolButton inputMedia" rel="inputMedia">Media</a></li>
+          <li><a class="toolButton inputSelectOne" rel="inputSelectOne">Choose One</a></li>
+          <li><a class="toolButton inputSelectMany" rel="inputSelectMany">Select Multiple</a></li>
+          <li class="separator"></li>
+          <li><a class="toolButton group" rel="group">Group</a></li>
+          <li><a class="toolButton branch" rel="branch">Branch</a></li>
+        </ul>
+      </div>
+      <div class="workspaceScrollArea">
+        <div class="workspaceWrapper">
+          <div class="workspace"></div>
+        </div>
+      </div>
+      <div class="propertiesPane">
+        <h3>Properties</h3>
+        <ul class="propertyList">
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal translationsDialog">
+      <h3>Translations</h3>
+      <div class="modalContents">
+        <h4>Active languages</h4>
+        <p class="translationNone">(none)</p>
+        <ul class="translationList"></ul>
+
+        <h4>Add a new language</h4>
+        <select class="translationSelect"></select>
+        <a class="addTranslation" href="#addTranslation">Add Translation</a>
+      </div>
+      <div class="modalButtonContainer">
+        <a class="modalButton jqmClose" href="#close">Done</a>
+      </div>
+    </div>
+
+    <div class="modal exportDialog">
+      <h3>Export</h3>
+      <div class="modalContents">
+        <h4>Output XML</h4>
+        <div class="exportCodeContainer">
+          <pre></pre>
+        </div>
+      </div>
+      <div class="modalButtonContainer">
+        <a class="modalButton jqmClose" href="#close">Done</a>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="/javascripts/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/javascripts/underscore.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.draggable.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.cloudkit.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.jqmodal.min.js"></script>
+    <script type="text/javascript" src="/javascripts/namespace.js"></script>
+    <script type="text/javascript" src="/javascripts/util.js"></script>
+    <script type="text/javascript" src="/javascripts/data.js"></script>
+    <script type="text/javascript" src="/javascripts/i18n.js"></script>
+    <script type="text/javascript" src="/javascripts/property-editor.js"></script>
+    <script type="text/javascript" src="/javascripts/workspace-draggable.js"></script>
+    <script type="text/javascript" src="/javascripts/control.js"></script>
+    <script type="text/javascript" src="/javascripts/toolbutton.js"></script>
+    <script type="text/javascript" src="/javascripts/application.js"></script>
+
+    <div id="templates">
+
+      <div class="control">
+        <h4 class="controlName">
+          <a href="#deleteControl" class="deleteControl">Delete</a>
+          <div class="icon"></div>
+          <span class="text"></span>
+        </h4>
+        <div class="controlPreview"></div>
+        <dl class="controlProperties clearfix"></dl>
+        <div class="controlFlowArrow"></div>
+      </div>
+
+      <div class="editors">
+        <div class="text">
+          <h4></h4>
+          <p></p>
+          <input type="text" class="editorTextfield"/>
+        </div>
+
+        <div class="bool">
+          <input type="checkbox" class="editorCheckbox"/>
+          <label></label>
+          <p></p>
+        </div>
+
+        <div class="numericRange dateRange">
+          <h4></h4>
+          <p></p>
+          <input id="property_range_enabled" type="checkbox" class="editorCheckbox"/>
+          <label for="property_range_enabled">Enable</label>
+          <h5>Minimum</h5>
+          <input type="text" class="editorTextfield min"/>
+          <h5>Maximum</h5>
+          <input type="text" class="editorTextfield max"/>
+        </div>
+
+        <div class="uiText">
+          <h4></h4>
+          <p></p>
+          <ul class="translations"></ul>
+          <a class="manageTranslations" href="#translationsDialog" rel="modal">Manage Translations</a>
+        </div>
+          <li class="uiText-translation">
+            <h5></h5>
+            <input type="text" class="editorTextfield"/>
+          </li>
+
+        <div class="enum">
+          <h4></h4>
+          <p></p>
+          <select class="editorSelect"></select>
+        </div>
+
+        <div class="optionsEditor">
+          <h4></h4>
+          <p></p>
+          <ul class="optionsList"></ul>
+          <a class="addOption" href="#addOption">Add Option</a>
+          <a class="manageTranslations" href="#translationsDialog" rel="modal">Manage Translations</a>
+        </div>
+          <div class="optionsEditorValueField">
+            <h5>Underlying Value</h5>
+            <input type="text" class="editorTextfield underlyingValue"/>
+          </div>
+
+        <div class="loopEditor">
+          <h4></h4>
+          <p></p>
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
