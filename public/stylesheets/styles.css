@@ -1,0 +1,628 @@
+/**********
+ * COMPAT *
+ **********/
+
+/* reset styles to sanity */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* set 1em to 10px */
+body
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 62.5%;
+    line-height: 1;
+}
+
+/* clearfix */
+.clearfix:after 
+{
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix 
+{ 
+    display: inline-block;
+}
+.clearfix 
+{ 
+    display: block;
+}
+* html .clearfix 
+{ 
+    height: 1%;
+}
+
+/***********
+ * WIDGETS *
+ ***********/
+
+/* jqm */
+.jqmOverlay { background-color: #000; }
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
+.modal
+{
+    background-color: #fff;
+    -moz-box-shadow: 0 0 1em #222;
+    -webkit-box-shadow: 0 0 1em #222;
+    color: #333;
+    display: none;
+    left: 50%;
+    margin-left: -30em;
+    padding: 2em;
+    position: fixed;
+    top: 17%;
+    width: 60em;
+}
+.modal h3
+{
+    color: #999;
+    font-size: 2.5em;
+    margin-bottom: 0.7em;
+}
+.modal .modalContents
+{
+    margin: 0 1.5em 1em;
+}
+.modal .modalButtonContainer
+{
+    margin-top: 1.5em;
+}
+.modal .modalButtonContainer .modalButton
+{
+    color: #666;
+    font-size: 1.3em;
+    letter-spacing: -1px;
+    padding: 0.5em;
+}
+.modal .modalButtonContainer .modalButton:hover
+{
+    background-color: #f0f0f0;
+}
+
+#templates
+{
+    display: none;
+}
+
+/***********
+ * GENERAL *
+ ***********/
+
+h1, h2, h3, h4, h5, h6
+{
+    color: #444;
+    font-weight: normal;
+    letter-spacing: -1px;
+}
+
+h3
+{
+    font-size: 1.4em;
+}
+
+a
+{
+    color: #4e647b;
+    text-decoration: none;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+/**********
+ * LAYOUT *
+ **********/
+
+body
+{
+    background: #f3f3f3 url(/images/bg_slice.png) repeat-x top;
+    overflow: hidden;
+}
+
+.header
+{
+    padding: 2em;
+}
+.header h1
+{
+    display: inline-block;
+}
+.header #editTitleLink
+{
+    color: #666;
+    text-transform: lowercase;
+}
+.header ul.menu
+{
+    background: transparent url(/images/vert_bar.png) no-repeat left top;
+    display: inline-block;
+    margin-left: 2em;
+    padding-left: 0.5em;
+}
+.header ul.menu li
+{
+    display: inline-block;
+    margin-left: 1em;
+}
+.header ul.menu li span
+{
+    color: #666;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.4em;
+    letter-spacing: -1px;
+    padding: 0.5em;
+}
+.header ul.menu li:hover,
+.header ul.menu li.open
+{
+    background-color: #f0f0f0;
+}
+.header ul.menu li ul.submenu
+{
+    background-color: #f0f0f0;
+    display: none;
+    padding: 0.2em;
+    position: absolute;
+    z-index: 50;
+}
+.header ul.menu li ul.submenu li
+{
+    display: block;
+    margin-bottom: 0.3em;
+    margin-left: 0;
+}
+.header ul.menu li ul.submenu li.divider
+{
+    border-top: 1px solid #ddd;
+}
+.header ul.menu li ul.submenu li.infoText
+{
+    color: #777;
+    font-size: 1.1em;
+    letter-spacing: -1px;
+    padding: 0.4em;
+}
+.header ul.menu li ul.submenu li a
+{
+    color: #444;
+    display: block;
+    font-size: 1.3em;
+    letter-spacing: -1px;
+    padding: 0.6em;
+    padding-right: 3em;
+}
+.header ul.menu li ul.submenu li.disabled a
+{
+    color: #888;
+}
+.header ul.menu li ul.submenu li a:hover
+{
+    background-color: #fff;
+}
+.header ul.menu li ul.submenu li.disabled a:hover
+{
+    background-color: transparent;
+    cursor: default;
+}
+
+.header .accountStatus
+{
+    font-size: 1.4em;
+    letter-spacing: -1px;
+    position: absolute;
+    right: 2em;
+    top: 2em;
+}
+
+.toolPalette
+{
+    bottom: 1em;
+    left: 1em;
+    position: absolute;
+}
+.toolPalette h3
+{
+    background: transparent url(/images/add_new.png) no-repeat;
+    display: inline-block;
+    margin-right: 0.5em;
+    padding-left: 18px;
+}
+.toolPalette ul
+{
+    display: inline-block;
+}
+.toolPalette ul li
+{
+    display: inline-block;
+    font-size: 1.1em;
+    letter-spacing: -1px;
+    margin-left: 1em;
+}
+.toolPalette ul li.separator
+{
+    width: 1em;
+}
+.toolPalette ul li a
+{
+    cursor: pointer;
+    padding: 0.5em;
+}
+.toolPalette ul li a:hover
+{
+    background-color: #4e647b;
+    color: #f3f3f3;
+}
+.toolButton.ui-draggable-dragging
+{
+    display: block;
+    text-indent: -9999px;
+}
+
+.workspaceScrollArea
+{
+    background-color: #e8e8e8;
+    bottom: 3em;
+    left: 0.5em;
+    overflow-y: auto;
+    padding: 1em;
+    position: absolute;
+    right: 30em;
+    top: 6em;
+}
+.workspace
+{
+    padding-bottom: 20em;
+    min-height: 100%;
+}
+
+.workspaceInnerWrapper
+{
+    background: transparent url(/images/group_bg.png);
+    padding: 1em;
+}
+.workspaceInner
+{
+    min-height: 6em;
+    padding-bottom: 3em;
+}
+
+.control
+{
+    margin-bottom: 1.5em;
+    position: relative;
+}
+.control .controlInfo
+{
+    background: transparent url(/images/control_slice.png) repeat-x;
+    height: 76px;
+    padding: 6px;
+}
+.control .controlInfo .typeIcon
+{
+    float: left;
+    margin: 0.5em;
+    margin-right: 2em;
+}
+.control .controlInfo .deleteControl
+{
+    background: transparent url(/images/glyphs.png) no-repeat;
+    float: right;
+    height: 16px;
+    text-align: left;
+    text-indent: -9999px;
+    width: 16px;
+}
+.control .controlInfo .controlLabel
+{
+    color: #f3f3f3;
+    display: inline-block;
+    font-size: 2em;
+    padding-top: 0.4em;
+}
+.control .controlInfo .controlHint
+{
+    color: #bbb;
+    display: inline-block;
+    font-size: 1.4em;
+}
+.control .controlInfo .controlName
+{
+    color: #bbb;
+    font-size: 1.4em;
+}
+.control .controlInfo .controlProperties
+{
+    color: #bbb;
+    font-size: 1.1em;
+    margin-top: 1.4em;
+}
+.control .controlInfo .controlProperties li
+{
+    display: inline-block;
+    margin-right: 1.5em;
+    text-transform: lowercase;
+}
+.control.group .groupFooter
+{
+    height: 1em;
+}
+.control .controlFlowArrow
+{
+    background: transparent url(/images/control_arrows.png) no-repeat;
+    height: 28px;
+    left: 50%;
+    margin-left: -16px;
+    position: absolute;
+    width: 32px;
+    z-index: 1;
+}
+.control:hover > .controlInfo
+{
+    background-position: 0 -88px;
+}
+.control:hover > .controlFlowArrow
+{
+    background-position: 0 -28px;
+}
+.control.selected > .controlInfo
+{
+    background-position: 0 -176px;
+}
+.control.selected > .controlFlowArrow
+{
+    background-position: 0 -56px;
+}
+.control.group > .controlInfo
+{
+    background-position: 0 -352px;
+}
+.control.group > .controlFlowArrow
+{
+    background-position: 0 -112px;
+}
+.control.group > .groupFooter
+{
+    background-color: #445841;
+}
+.control.group:hover > .controlInfo
+{
+    background-position: 0 -440px;
+}
+.control.group:hover > .controlFlowArrow
+{
+    background-position: 0 -140px;
+}
+.control.group:hover > .groupFooter
+{
+    background-color: #546d51;
+}
+.control.group.selected > .controlInfo
+{
+    background-position: 0 -528px;
+}
+.control.group.selected > .controlFlowArrow
+{
+    background-position: 0 -168px;
+}
+.control.group.selected > .groupFooter
+{
+    background-color: #5b6732;
+}
+.control.ui-draggable-dragging
+{
+    z-index: 5;
+}
+body > .control.last .controlFlowArrow,
+.workspace .control:last-child > .controlFlowArrow
+{
+    display: none;
+}
+
+.placeholder
+{
+    background: transparent url(/images/control_slice.png) repeat-x 0 -264px;
+    height: 88px;
+    margin-bottom: 1.5em;
+    position: relative;
+    text-indent: -9999px;
+}
+.placeholder .flowArrow
+{
+    background: transparent url(/images/control_arrows.png) no-repeat 0 -84px;
+    height: 28px;
+    left: 50%;
+    margin-left: -16px;
+    position: absolute;
+    top: 88px;
+    width: 32px;
+    z-index: 1;
+}
+.workspace > .placeholder:last-child .flowArrow
+{
+    display: none;
+}
+
+.placeholder.hidden
+{
+    background: none;
+}
+
+.propertiesPane
+{
+    bottom: 0.5em;
+    padding: 1em;
+    overflow-y: auto;
+    position: absolute;
+    right: 0.5em;
+    top: 6em;
+    width: 27em;
+}
+
+.propertiesPane .propertyList li
+{
+    margin-top: 0.8em;
+}
+.propertiesPane .propertyList li:hover
+{
+    background-color: #eee;
+}
+.propertiesPane .propertyList li li,
+.propertiesPane .propertyList .optionsEditorValueField
+{
+    margin-left: 0.5em;
+}
+.propertiesPane .propertyList li.advanced
+{
+    border-top: 1px dashed #888;
+    padding-top: 0.5em;
+}
+.propertiesPane .propertyList li.emptyData
+{
+    color: #999;
+    font-size: 1.2em;
+    margin-top: 10em;
+    text-align: center;
+}
+.propertiesPane .propertyList li h4
+{
+    font-size: 1.3em;
+}
+.propertiesPane .propertyList li p
+{
+    color: #666;
+    font-size: 0.9em;
+    padding: 0.2em 0 0.3em;
+}
+.propertiesPane .propertyList input[type="text"]
+{
+    width: 21em;
+}
+.propertiesPane .propertyList li .bool label
+{
+    color: #444;
+    font-size: 1.3em;
+    letter-spacing: -1px;
+}
+.propertiesPane .propertyList li .bool p
+{
+    padding-left: 2.7em;
+}
+.propertiesPane .propertyList li .numericRange h5,
+.propertiesPane .propertyList li .numericRange input[type="text"]
+{
+    margin-left: 2.2em;
+}
+.propertiesPane .propertyList li h5
+{
+    font-size: 1.1em;
+}
+.propertiesPane .propertyList li.advanced a.toggle
+{
+    color: #444;
+    font-size: 1.4em;
+    letter-spacing: -1px;
+}
+
+.propertiesPane .propertyList li .addOption
+{
+    font-size: 1.2em;
+    letter-spacing: -1px;
+    margin-top: 0.5em;
+    padding: 0.5em;
+}
+.propertiesPane .propertyList li .removeOption
+{
+    float: right;
+}
+
+.propertiesPane .propertyList li.advanced .icon
+{
+    background: transparent url(/images/glyphs.png) no-repeat 0 -15px;
+    float: right;
+    height: 15px;
+    width: 15px;
+}
+.propertiesPane .propertyList li.advanced .expanded .icon
+{
+    background-position: 0 -30px;
+}
+
+.translationsDialog h4
+{
+    font-size: 1.3em;
+    margin-top: 1em;
+}
+.translationsDialog .addTranslation
+{
+    margin-left: 0.8em;
+}
+.translationsDialog .translationList li
+{
+    font-size: 1.1em;
+    padding: 0.3em;
+    width: 20em;
+}
+.translationsDialog .translationList li .removeTranslation
+{
+    float: right;
+}
+
+.exportDialog .exportCodeContainer
+{
+    max-height: 30em;
+    overflow: auto;
+}
+
+/***********
+ * SPRITES *
+ ***********/
+
+.toolButton .typeIcon,
+.control .typeIcon
+{
+    background: transparent url(/images/type_icons.png) no-repeat;
+    height: 64px;
+    width: 64px;
+}
+/* grouping/branching go first due to precedence+nesting */
+.group .typeIcon           { background-position: 0 -448px; }
+.branch .typeIcon          { background-position: 0 -512px; }
+.inputText .typeIcon       { background-position: 0 0px; }
+.inputNumeric .typeIcon    { background-position: 0 -64px; }
+.inputDate .typeIcon       { background-position: 0 -128px; }
+.inputLocation .typeIcon   { background-position: 0 -192px; }
+.inputMedia .typeIcon      { background-position: 0 -256px; }
+.inputSelectOne .typeIcon  { background-position: 0 -320px; }
+.inputSelectMany .typeIcon { background-position: 0 -384px; }

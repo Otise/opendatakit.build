@@ -1,0 +1,20 @@
+h1. odkmaker — wysiwyg web-based xforms editor for the odk subset
+
+h2. Running
+
+odkmaker is built on the Ruby Rack server stack, so look up how to run Rack servers, and apply that to config.ru. Phusion Passenger works.
+
+For a quickstart type local dev run, get the @shotgun@ gem, make sure you have all the required stuff, as well as a webserver gem such as @mongrel@, and then type @shotgun config.ru@.
+
+h2. Dependencies
+
+* Ruby 1.8.6+
+* Tokyo Cabinet (install from source)
+
+h2. Required Gems
+
+* rack
+* sinatra
+* ffi
+* rufus-tokyo
+* json

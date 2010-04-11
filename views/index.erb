@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <title>ODK Build</title>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui-1.7.2.custom.css"/>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Untitled Form</h1>
+      <a id="editTitleLink" href="#edit_title" title="Rename this form">Rename</a>
+
+      <ul class="menu">
+        <li>
+          <span>File</span>
+          <ul class="submenu">
+            <li class="disabled"><a href="#newFormDialog" rel="modal">New Form</a></li>
+            <li class="disabled"><a href="#openFormDialog" rel="modal">Open Form...</a></li>
+            <li class="divider"></li>
+            <li class="disabled"><a href="#closeForm">Close</a></li>
+            <li class="disabled"><a href="#saveForm">Save</a></li>
+            <li class="disabled"><a href="#saveAsFormDialog" rel="modal">Save Form As...</a></li>
+            <li class="divider"></li>
+            <li><a href="#exportDialog" id="exportLink" rel="modal">Export to XML...</a></li>
+          </ul>
+        </li>
+        <li>
+          <span>Edit</span>
+          <ul class="submenu">
+            <li class="disabled"><a href="#cut">Cut</a></li>
+            <li class="disabled"><a href="#copy">Copy</a></li>
+            <li class="disabled"><a href="#paste">Paste</a></li>
+            <li class="divider"></li>
+            <li class="disabled"><a href="#undo">Undo</a></li>
+            <li class="disabled"><a href="#redo">Redo</a></li>
+            <li class="divider"></li>
+            <li><a href="#translationsDialog" class="manageTranslations" rel="modal">Manage Translations...</a></li>
+          </ul>
+        </li>
+        <li>
+          <span>View</span>
+          <ul class="submenu">
+            <li class="infoText">Displayed Language</li>
+            <li>
+              <ul class="displayLanguages">
+                <li><a href="#" rel="eng">English</a></li>
+              </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="disabled"><a href="#toggleCollapsedMode">Collapse Controls</a></li>
+          </ul>
+        </li>
+        <li>
+          <span>Help</span>
+          <ul class="submenu">
+            <li class="disabled"><a href="#toggleHints">Display Hints</a></li>
+            <li class="disabled"><a href="#tutorial">Tutorial</a></li>
+            <li class="disabled"><a href="#about">About ODK Builder...</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="accountStatus">Signed in as <a href="#">Yaw Anokwa</a>.</div>
+    </div>
+    <div class="mainWrapper">
+      <div class="toolPalette">
+        <h3>Add new</h3>
+        <ul>
+          <li><a class="toolButton inputText" rel="inputText">Text</a></li>
+          <li><a class="toolButton inputNumeric" rel="inputNumeric">Numeric</a></li>
+          <li><a class="toolButton inputDate" rel="inputDate">Date</a></li>
+          <li><a class="toolButton inputLocation" rel="inputLocation">Location</a></li>
+          <li><a class="toolButton inputMedia" rel="inputMedia">Media</a></li>
+          <li><a class="toolButton inputSelectOne" rel="inputSelectOne">Choose One</a></li>
+          <li><a class="toolButton inputSelectMany" rel="inputSelectMany">Select Multiple</a></li>
+          <li class="separator"></li>
+          <li><a class="toolButton group" rel="group">Group</a></li>
+          <li><a class="toolButton branch" rel="branch">Branch</a></li>
+        </ul>
+      </div>
+      <div class="workspaceScrollArea">
+        <div class="workspace"></div>
+      </div>
+      <div class="propertiesPane">
+        <h3>Properties</h3>
+        <ul class="propertyList">
+          <li class="emptyData">First add a control, then select it to view its properties here.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal translationsDialog">
+      <h3>Translations</h3>
+      <div class="modalContents">
+        <h4>Active languages</h4>
+        <p class="translationNone">(none)</p>
+        <ul class="translationList"></ul>
+
+        <h4>Add a new language</h4>
+        <select class="translationSelect"></select>
+        <a class="addTranslation" href="#addTranslation">Add Translation</a>
+      </div>
+      <div class="modalButtonContainer">
+        <a class="modalButton jqmClose" href="#close">Done</a>
+      </div>
+    </div>
+
+    <div class="modal exportDialog">
+      <h3>Export</h3>
+      <div class="modalContents">
+        <h4>Output XML</h4>
+        <div class="exportCodeContainer">
+          <pre></pre>
+        </div>
+      </div>
+      <div class="modalButtonContainer">
+        <a class="modalButton jqmClose" href="#close">Done</a>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="/javascripts/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/javascripts/underscore.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.draggable.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.jqmodal.min.js"></script>
+    <script type="text/javascript" src="/javascripts/namespace.js"></script>
+    <script type="text/javascript" src="/javascripts/util.js"></script>
+    <script type="text/javascript" src="/javascripts/data.js"></script>
+    <script type="text/javascript" src="/javascripts/i18n.js"></script>
+    <script type="text/javascript" src="/javascripts/property-editor.js"></script>
+    <script type="text/javascript" src="/javascripts/workspace-draggable.js"></script>
+    <script type="text/javascript" src="/javascripts/control.js"></script>
+    <script type="text/javascript" src="/javascripts/toolbutton.js"></script>
+    <script type="text/javascript" src="/javascripts/dropdown-menu.js"></script>
+    <script type="text/javascript" src="/javascripts/application.js"></script>
+
+    <div id="templates">
+
+      <div class="control">
+        <div class="controlInfo">
+          <div class="typeIcon"></div>
+          <a href="#deleteControl" class="deleteControl">Delete</a>
+          <h4 class="controlLabel"></h4>
+          <h5 class="controlHint"></h5>
+          <h5 class="controlName"></h5>
+          <ul class="controlProperties"></ul>
+        </div>
+        <div class="controlFlowArrow"></div>
+      </div>
+
+      <div class="editors">
+        <div class="text">
+          <h4></h4>
+          <p></p>
+          <input type="text" class="editorTextfield"/>
+        </div>
+
+        <div class="bool">
+          <input type="checkbox" class="editorCheckbox"/>
+          <label></label>
+          <p></p>
+        </div>
+
+        <div class="numericRange dateRange">
+          <h4></h4>
+          <p></p>
+          <input id="property_range_enabled" type="checkbox" class="editorCheckbox"/>
+          <label for="property_range_enabled">Enable</label>
+          <h5>Minimum</h5>
+          <input type="text" class="editorTextfield min"/>
+          <h5>Maximum</h5>
+          <input type="text" class="editorTextfield max"/>
+        </div>
+
+        <div class="uiText">
+          <h4></h4>
+          <p></p>
+          <ul class="translations"></ul>
+        </div>
+          <li class="uiText-translation">
+            <h5></h5>
+            <input type="text" class="editorTextfield"/>
+          </li>
+
+        <div class="enum">
+          <h4></h4>
+          <p></p>
+          <select class="editorSelect"></select>
+        </div>
+
+        <div class="optionsEditor">
+          <h4></h4>
+          <p></p>
+          <ul class="optionsList"></ul>
+          <a class="addOption" href="#addOption">Add Option</a>
+        </div>
+          <div class="optionsEditorValueField">
+            <h5>Underlying Value</h5>
+            <input type="text" class="editorTextfield underlyingValue"/>
+          </div>
+
+        <div class="loopEditor">
+          <h4></h4>
+          <p></p>
+          
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+</html>
