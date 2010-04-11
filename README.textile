@@ -13,8 +13,9 @@ h2. Dependencies
 
 h2. Required Gems
 
-* rack
-* sinatra
 * ffi
 * rufus-tokyo
+* rack
+* sinatra
 * json
+* warden
