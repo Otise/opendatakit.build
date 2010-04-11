@@ -1,2 +1,4 @@
-odkmaker.tdb
+*.tdb
+*.tch
 .DS_Store
+*.swp

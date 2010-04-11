@@ -1,18 +1,18 @@
-require 'rubygems'
-require 'cloudkit'
-require 'rufus/tokyo'
-require 'odkmaker_server.rb'
-
-# config
-CloudKit.setup_storage_adapter Rufus::Tokyo::Table.new 'odkmaker.tdb'
+require 'model/connection_manager'
+require 'odkbuild_server'
 
 # middleware
 use Rack::CommonLogger
-use Rack::Session::Pool
-use CloudKit::OpenIDFilter do |url|
-  (url =~ /^\/(|images|javascripts|stylesheets)/) != nil
+
+use Rack::Session::Cookie,
+  :secret => 'configure_me'
+
+use ConnectionManager
+
+use Warden::Manager do |manager|
+  manager.default_strategies :odkbuild
+  manager.failure_app = OdkBuild
 end
 
-# apps
-use CloudKit::Service, :collections => [:forms]
-run Sinatra::Application
+# app
+run OdkBuild
