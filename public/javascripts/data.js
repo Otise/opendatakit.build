@@ -258,7 +258,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
                     children: [
                         {   name: 'label',
                             attrs: {
-                                'ref': itextPath
+                                'ref': "jr:itext('" + itextPath + "')"
                             } },
                         {   name: 'value',
                             val: option.val }
