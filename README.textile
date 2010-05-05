@@ -4,6 +4,32 @@ h2. Usage
 
 Go to http://build.opendatakit.org/ to give odkmaker a spin.
 
+
+Carl's instructions for dummies--
+Running your own.
+1)  Install Ruby 1.8.6+.  In MacOSX you get everything you need from XCode.  Not sure on other platforms.
+2)  Install Tokyo Cabinet (from source).  http://1978th.net/tokyocabinet/spex-en.html#installation
+3)  Install the following required gems.  From the command line:  sudo gem install [gemname]
+ * ffi
+ * rufus-tokyo
+ * rack
+ * sinatra
+ * json
+ * warden
+ 
+4)  Optional, but not if you want it to be easy to run locally.  Get another gem.
+ * shotgun
+ 
+4)  In a terminal, go to the base directory (something like /projects/build.opendatakit/).  There should be a file called 'config.ru'
+5)  edit odkbuild_server.rb.  Change the line near the top that says Sinatra::Default to Sinatra::Application.
+5a)  I have no idea if that's a change we can make permanently.
+6)  type:  shotgun config.ru
+7)  Point your browser to http://localhost:[port] where port is probably 9393.
+
+run it.
+
+
+Clint's "instructions"---
 h2. Running
 
 odkmaker is built on the Ruby Rack server stack, so look up how to run Rack servers, and apply that to config.ru. Phusion Passenger works.
