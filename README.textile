@@ -1,51 +1,29 @@
-h1. odkmaker — wysiwyg web-based xforms editor for the odk subset
+h1. ODK Build — WYSIWYG web-based XForms editor for the ODK subset of XForms
 
-h2. Usage
+ODK Build is built on the Ruby Rack server stack. Go to "http://build.opendatakit.org":http://build.opendatakit.org to give ODK Build a spin. If you would like to use it locally on your own machine, try the following steps.
 
-Go to http://build.opendatakit.org/ to give odkmaker a spin.
+h2. Install Dependencies
+* "Ruby 1.8.6+":http://www.ruby-lang.org/en/downloads
+* "Tokyo Cabinet":http://1978th.net/tokyocabinet/spex-en.html#installation (from source)
+* "RubyGems":http://docs.rubygems.org/read/chapter/3
 
+You will need to install Tokyo Cabinet from source. If you are in Windows, you will need "Cygwin":http://cygwin.com/. If you are on a Mac, you will need "XCode":http://developer.apple.com/technologies/xcode.html. If you are on Linux, you already know what to do.  
 
-Carl's instructions for dummies--
-Running your own.
-1)  Install Ruby 1.8.6+.  In MacOSX you get everything you need from XCode.  Not sure on other platforms.
-2)  Install Tokyo Cabinet (from source).  http://1978th.net/tokyocabinet/spex-en.html#installation
-3)  Install the following required gems.  From the command line:  sudo gem install [gemname]
- * ffi
- * rufus-tokyo
- * rack
- * sinatra
- * json
- * warden
- 
-4)  Optional, but not if you want it to be easy to run locally.  Get another gem.
- * shotgun
- 
-4)  In a terminal, go to the base directory (something like /projects/build.opendatakit/).  There should be a file called 'config.ru'
-5)  edit odkbuild_server.rb.  Change the line near the top that says Sinatra::Default to Sinatra::Application.
-5a)  I have no idea if that's a change we can make permanently.
-6)  type:  shotgun config.ru
-7)  Point your browser to http://localhost:[port] where port is probably 9393.
-
-run it.
-
-
-Clint's "instructions"---
-h2. Running
-
-odkmaker is built on the Ruby Rack server stack, so look up how to run Rack servers, and apply that to config.ru. Phusion Passenger works.
-
-For a quickstart type local dev run, get the @shotgun@ gem, make sure you have all the required stuff, as well as a webserver gem such as @mongrel@, and then type @shotgun config.ru@.
-
-h2. Dependencies
-
-* Ruby 1.8.6+
-* Tokyo Cabinet (install from source)
-
-h2. Required Gems
+h2. Install Gems
 
 * ffi
 * rufus-tokyo
 * rack
-* sinatra
 * json
 * warden
+* shotgun
+* mongrel
+* sinatra 0.9.6
+
+You can install all with @gem install ffi rufus-tokyo rack json warden shotgun mongrel sinatra --version "0.9.6"@
+
+h2. Run Server
+
+Check out the source code and in the base directory, you will find _config.ru_ and _odkbuild_server.rb_. In that folder, run @shotgun config.ru@.
+
+Point your browser to "http://localhost:[port]":http://localhost:9393 (where port is probably 9393) to start using the application.
