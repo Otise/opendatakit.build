@@ -1,4 +1,5 @@
 require 'rubygems'
+gem 'sinatra','<1.0'
 require 'sinatra'
 require 'json'
 require 'warden_odkbuild'
