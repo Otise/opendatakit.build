@@ -1,6 +1,6 @@
 h1. ODK Build — WYSIWYG web-based XForms editor for the ODK subset of XForms
 
-ODK Build is built on the Ruby Rack server stack. Go to "http://build.opendatakit.org":http://build.opendatakit.org to give ODK Build a spin. If you would like to use it locally on your own machine, try the following steps.
+ODK Build is built on the Ruby Rack server stack. Go to "http://build.opendatakit.org":http://build.opendatakit.org to give ODK Build a spin; unless you wish to write code for Build, this should be your best option. If you would like to use it locally on your own machine, try the following steps.
 
 h2. Install Dependencies
 * "Ruby 1.8.6+":http://www.ruby-lang.org/en/downloads
