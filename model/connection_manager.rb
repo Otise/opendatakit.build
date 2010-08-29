@@ -1,5 +1,3 @@
-require 'rufus/tokyo'
-
 class ConnectionManager
   class << self
     attr_accessor :connection
