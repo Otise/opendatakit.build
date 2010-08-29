@@ -1,29 +1,16 @@
-h1. ODK Build — WYSIWYG web-based XForms editor for the ODK subset of XForms
+h1. odkbuild — wysiwyg web-based xforms editor for the odk subset
 
-ODK Build is built on the Ruby Rack server stack. Go to "http://build.opendatakit.org":http://build.opendatakit.org to give ODK Build a spin; unless you wish to write code for Build, this should be your best option. If you would like to use it locally on your own machine, try the following steps.
+h2. Usage
 
-h2. Install Dependencies
-* "Ruby 1.8.6+":http://www.ruby-lang.org/en/downloads
-* "Tokyo Cabinet":http://1978th.net/tokyocabinet/spex-en.html#installation (from source)
-* "RubyGems":http://docs.rubygems.org/read/chapter/3
+odkbuild (formerly odkmaker) is a web-based service. Unless you mean to do development on it, just go to http://build.opendatakit.org to give it a try.
 
-You will need to install Tokyo Cabinet from source. If you are in Windows, you will need "Cygwin":http://cygwin.com/. If you are on a Mac, you will need "XCode":http://developer.apple.com/technologies/xcode.html. If you are on Linux, you already know what to do.  
+h2. Development
 
-h2. Install Gems
+odkbuild is a Ruby Rack-based application. Everything it needs is kicked off by the config.ru Rackup file. We use @shotgun@ for local development and Phusion Passenger for production deployment.
 
-* ffi
-* rufus-tokyo
-* rack
-* json
-* warden
-* shotgun
-* mongrel
-* sinatra 0.9.6
+h3. Dependencies
 
-You can install all with @gem install ffi rufus-tokyo rack json warden shotgun mongrel sinatra --version "0.9.6"@
+The project has one native dependency: Tokyo Cabinet. We use this as our datastore. You'll have to build it natively for any system you want to run the server on. See http://fallabs.com/tokyocabinet/ for details.
 
-h2. Run Server
+Once you have that, all Rubygem dependencies are managed by Ruby Bundler. Make sure you have at least version 1.0.0 of Bundler installed (@gem update --system && gem install bundler@ if you don't have it already), and then simply run @bundle install@ in the application root to resolve and install the appropriate dependencies.
 
-Check out the source code and in the base directory, you will find _config.ru_ and _odkbuild_server.rb_. In that folder, run @shotgun config.ru@.
-
-Point your browser to "http://localhost:[port]":http://localhost:9393 (where port is probably 9393) to start using the application.
