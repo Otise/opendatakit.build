@@ -287,6 +287,7 @@
                         options: [ 'Image',
                                    'Audio',
                                    'Video' ] } },
+        inputBarcode: {},
         inputSelectOne: {
           options:    { name: 'Options',
                         type: 'optionsEditor',
@@ -315,11 +316,10 @@
                         required: true,
                         value: {},
                         summary: false },
-          loop:       { name: 'Loop',
-                        type: 'loopEditor',
-                        description: 'Loop options over this group.',
-                        value: false,
-                        summary: true } },
+          loop:       { name: 'Looped',
+                        type: 'bool',
+                        description: 'Whether or not to allow this group to loop.',
+                        value: false } },
         branch: {
           logic:      { name: 'Rules',
                         type: 'logicEditor',

@@ -87,7 +87,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
     odkmaker.data.load = function(formObj)
     {
         $('h1').text(formObj.title);
-        $('.workspace').empty(); //TODO
+        $('.workspace').empty();
         loadRecurse($('.workspace'), formObj.controls);
         $('.workspace .control:first').trigger('odkControl-select');
     };
@@ -99,6 +99,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
         inputDate: 'input',
         inputLocation: 'input',
         inputMedia: 'upload',
+        inputBarcode: 'input',
         inputSelectOne: 'select1',
         inputSelectMany: 'select'
     };
@@ -125,6 +126,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
         {
             var instanceTag = {
                 name: control.name,
+                attrs: {},
                 children: []
             };
             instance.children.push(instanceTag);
@@ -143,6 +145,20 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
                     }
                 });
                 addTranslation(control.label, xpath + control.name + ':label', translations);
+            }
+
+            if (control.loop === true)
+            {
+                instanceTag.attrs['jr:template'] = '';
+                var loopBodyTag = {
+                    name: 'repeat',
+                    attrs: {
+                        nodeset: xpath + control.name,
+                    },
+                    children: []
+                };
+                bodyTag.children.push(loopBodyTag);
+                bodyTag = loopBodyTag;
             }
 
             _.each(control.children, function(child)
@@ -200,6 +216,8 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
             binding.attrs.type = 'geopoint';
         else if (control.type == 'inputMedia')
             binding.attrs.type = 'binary';
+        else if (control.type == 'inputBarcode')
+            binding.attrs.type = 'barcode';
 
         // deal with properties:
 
@@ -316,7 +334,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
                 'xmlns:ev': 'http://www.w3.org/2001/xml-events',
                 'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
                 'xmlns:jr': 'http://openrosa.org/javarosa',
-                'id': 'build_' + (dataNS.currentForm ? dataNS.currentForm.id : 'temp') +
+                'id': 'build_' + $.sanitizeString($('.header h1').text()) +
                       '_' + Math.round((new Date()).getTime() / 1000)
             },
             children: [
