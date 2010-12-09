@@ -1,5 +1,8 @@
+require 'lib/multipart'
+
 require 'model/user'
 require 'model/form'
+require 'model/connection_manager'
 
 class OdkBuild < Sinatra::Application
   disable :run
@@ -175,6 +178,60 @@ class OdkBuild < Sinatra::Application
     return params[:payload]
   end
 
+  # bounce a payload through the server to aggregate
+  post '/aggregate/post' do
+    # make sure we're good to go
+    user = env['warden'].user
+    return error_permission_denied unless user
+    return error_validation_failed unless params[:payload]
+
+    # generate some local ids
+    local_token = "#{Time.now.to_i}_#{user.username}"
+    oauth_callback = "http://#{request.host_with_port}/aggregate/return/#{local_token}"
+
+    # oauth
+    instance_uri = "https://#{params[:aggregate_instance_name]}.appspot.com"
+    consumer = get_oauth_consumer instance_uri
+    request_token = consumer.get_request_token :oauth_callback => oauth_callback
+
+    # store off stuff we'll need later
+    ConnectionManager.connection[:aggregate_requests][local_token] = {
+      'site' => instance_uri,
+      'instance_name' => params[:aggregate_instance_name],
+      'token' => request_token.token,
+      'secret' => request_token.secret,
+      'payload' => params[:payload]
+    }
+
+    # send the user to the right place
+    redirect request_token.authorize_url :oauth_callback => oauth_callback
+  end
+
+  get '/aggregate/return/:local_token' do
+    # get our info back
+    aggregate_request = ConnectionManager.connection[:aggregate_requests][params[:local_token]]
+
+    # oauth
+    consumer = get_oauth_consumer aggregate_request['site']
+    request_token = OAuth::RequestToken.new consumer, aggregate_request['token'], aggregate_request['secret']
+    access_token = request_token.get_access_token :oauth_verifier => params[:oauth_verifier]
+
+    # fire off our request
+    body, headers = Multipart::Post.prepare_query 'form_def_file' => { :filename => 'form.xml', :content => aggregate_request['payload'] }
+    result = access_token.post '/upload?auth=oauth', body, headers
+
+    # look at the bloody remains
+    unless (result.is_a? Net::HTTPSuccess) || (result.is_a? Net::HTTPFound) # aggregate is really weird.
+      # something went wrong
+      status 400
+      return { :error => 'Something went wrong when trying to post to Aggregate.' }.to_json
+    end
+
+    content_type :html
+    @aggregate_instance_uri = aggregate_request['site']
+    erb :aggregate_success
+  end
+
 private
   def error_validation_failed
     status 400
@@ -189,6 +246,14 @@ private
   def error_not_found
     status 404
     return { :error => 'not found' }.to_json
+  end
+
+  def get_oauth_consumer(site)
+    OAuth::Consumer.new 'anonymous', 'anonymous',
+      { :site => site,
+        :request_token_path => '/_ah/OAuthGetRequestToken',
+        :authorize_path => '/_ah/OAuthAuthorizeToken',
+        :access_token_path => '/_ah/OAuthGetAccessToken' }
   end
 
 end
