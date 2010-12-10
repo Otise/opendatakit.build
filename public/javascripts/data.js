@@ -126,6 +126,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
         {
             var instanceTag = {
                 name: control.name,
+                attrs: {},
                 children: []
             };
             instance.children.push(instanceTag);
@@ -144,6 +145,20 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
                     }
                 });
                 addTranslation(control.label, xpath + control.name + ':label', translations);
+            }
+
+            if (control.loop === true)
+            {
+                instanceTag.attrs['jr:template'] = '';
+                var loopBodyTag = {
+                    name: 'repeat',
+                    attrs: {
+                        nodeset: xpath + control.name,
+                    },
+                    children: []
+                };
+                bodyTag.children.push(loopBodyTag);
+                bodyTag = loopBodyTag;
             }
 
             _.each(control.children, function(child)
@@ -291,6 +306,10 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
         // TODO: user-config of instanceHead
         var instanceHead = {
             name: 'data',
+            attrs: {
+              'id': 'build_' + $.sanitizeString($('.header h1').text()) +
+                    '_' + Math.round((new Date()).getTime() / 1000)
+            },
             children: []
         };
 
@@ -317,9 +336,7 @@ var dataNS = odkmaker.namespace.load('odkmaker.data');
                 'xmlns:h': 'http://www.w3.org/1999/xhtml',
                 'xmlns:ev': 'http://www.w3.org/2001/xml-events',
                 'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
-                'xmlns:jr': 'http://openrosa.org/javarosa',
-                'id': 'build_' + (dataNS.currentForm ? dataNS.currentForm.id : 'temp') +
-                      '_' + Math.round((new Date()).getTime() / 1000)
+                'xmlns:jr': 'http://openrosa.org/javarosa'
             },
             children: [
                 {   name: 'h:head',
