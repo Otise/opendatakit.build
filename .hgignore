@@ -1,2 +1,4 @@
 \.*.(swp|tch|tdb)
 .DS_Store
+\.bundle/config
+vendor
