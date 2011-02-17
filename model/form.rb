@@ -26,8 +26,9 @@ class Form
 # Class
   def data
     result = @data.dup
-    result[:id] = @key
-    result[:controls] = JSON.parse(@form_data) unless @form_data.nil?
+    result['id'] = @key
+    result['controls'] = (JSON.parse @form_data) unless @form_data.nil?
+    result['metadata'] = self.metadata
 
     return result
   end
@@ -38,7 +39,8 @@ class Form
     ConnectionManager.connection[:forms][key] = {
       :title => data['title'],
       :description => (data['description'] || ''),
-      :owner => owner.username
+      :owner => owner.username,
+      :metadata => data['metadata']
     }
 
     ConnectionManager.connection[:form_data][key] = data['controls'].to_json
@@ -49,6 +51,7 @@ class Form
   def update(data)
     self.title = data['title'] unless data['title'].nil?
     self.description = data['description'] unless data['description'].nil?
+    self.metadata = data['metadata'] unless data['metadata'].nil?
     @form_data = data['controls'].to_json unless data['controls'].nil?
   end
 
@@ -95,6 +98,15 @@ class Form
   end
   def form_data=(form_data)
     @form_data = form_data
+  end
+
+  def metadata
+    return (JSON.parse @data['metadata']) unless @data['metadata'].nil? || (@data['metadata'] == '')
+    return {}
+  end
+  def metadata=(metadata)
+    metadata = metadata.to_json unless metadata.is_a? String
+    @data['metadata'] = metadata
   end
 
 private
