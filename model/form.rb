@@ -34,7 +34,9 @@ class Form
   end
 
   def self.create(data, owner)
-    key = (String.random_chars 6) while !ConnectionManager.connection[:forms][key].nil?
+    begin
+      key = (String.random_chars 6)
+    end while !ConnectionManager.connection[:forms][key].nil?
 
     ConnectionManager.connection[:forms][key] = {
       :title => data['title'],
@@ -115,3 +117,4 @@ private
     @form_data = form_data unless form_data.nil?
   end
 end
+
